@@ -8,6 +8,7 @@ var {user} = require('./models/user.js');
 
 var app = express();
 app.use(bodyParser.json());
+
 app.post('/todos', (req, res) => {
     var todo_item = new todo({
         text: req.body.text
@@ -20,7 +21,17 @@ app.post('/todos', (req, res) => {
     .catch((err)=>{
         res.status(400).send(err);
     })
-})
+});
+
+app.get('/todos', (req, res)=>{
+    todo.find()
+    .then((todos)=>{
+        res.send({todos});
+    })
+    .catch((err)=>{
+        res.status(400).send(err)
+    })
+});
 
 app.listen(3000, () => {
     console.log('server started on port 3000')
