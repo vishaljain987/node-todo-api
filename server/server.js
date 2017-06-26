@@ -1,4 +1,6 @@
 console.log('starting server.js');
+
+require('./config/config.js');
 var express = require('express');
 var bodyParser = require('body-parser');
 var {ObjectID} = require('mongodb');
@@ -8,6 +10,7 @@ var {todo} = require('./models/todo.js');
 var {user} = require('./models/user.js');
 
 var app = express();
+var port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
@@ -51,8 +54,8 @@ app.get('/todos/:id', (req, res)=>{
     })
 });
 
-app.listen(3000, () => {
-    console.log('server started on port 3000')
+app.listen(port, () => {
+    console.log(`server started on port ${port}`)
 })
 
 module.exports = {app};
